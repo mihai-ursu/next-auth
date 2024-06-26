@@ -21,11 +21,13 @@ const CardWrapper = ({
   showSocial,
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-md">
+    <Card className="w-4/5 sm:w-[400px] shadow-md">
       <CardHeader>
         <Header label={headerLabel} />
       </CardHeader>
+
       <CardContent>{children}</CardContent>
+
       {showSocial ? (
         <CardFooter>
           <Social />
