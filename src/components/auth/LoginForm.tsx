@@ -1,6 +1,32 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema } from "@/schemas";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+
 import CardWrapper from "./CardWrapper";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import FormError from "../FormError";
 
 const LoginForm = () => {
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
   return (
     <CardWrapper
       headerLabel="Welcome back"
@@ -8,7 +34,53 @@ const LoginForm = () => {
       backButtonHref="/auth/register"
       showSocial
     >
-      LoginForm
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(() => {})} className="space-y-6">
+          <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field, formState: { errors } }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="example@email.com"
+                      className={errors.email ? "border-destructive" : ""}
+                      type="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field, formState: { errors } }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder="********"
+                      className={errors.email ? "border-destructive" : ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormError message="test" />
+          <Button type="submit" className="w-full">
+            Login
+          </Button>
+        </form>
+      </Form>
     </CardWrapper>
   );
 };
