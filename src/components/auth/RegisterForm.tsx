@@ -30,6 +30,7 @@ const RegisterForm = () => {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
+      name: "",
       password: "",
       confirmPassword: "",
     },
@@ -48,8 +49,6 @@ const RegisterForm = () => {
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
     setSuccess("");
-
-    console.log(values);
 
     startTransition(() =>
       register(values).then((data) => {
@@ -91,6 +90,25 @@ const RegisterForm = () => {
                       placeholder="example@email.com"
                       className={errors.email ? "border-destructive" : ""}
                       type="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field, formState: { errors } }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="John Doe"
+                      className={errors.name ? "border-destructive" : ""}
                     />
                   </FormControl>
                   <FormMessage />
