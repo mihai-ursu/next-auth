@@ -81,7 +81,7 @@ const LoginForm = () => {
             />
           </div>
           <FormError message="" />
-          <FormSuccess message="" />
+          <FormSuccess message="test" />
           <Button type="submit" className="w-full">
             Login
           </Button>
